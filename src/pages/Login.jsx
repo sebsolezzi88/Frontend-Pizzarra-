@@ -26,6 +26,7 @@ const Login = () => {
       setError('');
       const response = await login(formData);
       localStorage.setItem('token',response.token);
+      localStorage.setItem('username',response.username);
       navigate('/profile');
     } catch (err) {
       setError(err.response?.data?.message || 'Error desconocido');
