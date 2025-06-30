@@ -74,11 +74,11 @@ const Profile = () => {
               <textarea
                 onChange={handleChange}
                 class="form-control"
+                value={content}
                 name="content"
                 rows="3"
-              >
-                {content}
-              </textarea>
+              />
+              
               <button type="submit" className="btn btn-primary d-bloc mt-2">
                 Guardar
               </button>
