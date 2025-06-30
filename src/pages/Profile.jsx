@@ -97,16 +97,29 @@ const Profile = () => {
       <p className="text-center">No hay publicaciones.</p>
     ) : (
       posts.map((post) => (
-        <div key={post.id} className="mb-3 p-3 border rounded bg-white shadow-sm">
-          <p className="mb-1">{post.content}</p>
-          <small className="text-muted">
-            Publicado el {formatDate(post.createdAt) }
-          </small>
-        </div>
-      ))
-    )}
+  <div key={post.id} className="mb-3 p-3 border rounded bg-white shadow-sm">
+    <p className="mb-1">{post.content}</p>
+    <div className="d-flex justify-content-between align-items-center">
+      <small className="text-muted">
+        Publicado el {formatDate(post.createdAt)}
+      </small>
+      <div>
+        <span role="button" className="text-primary me-2" title="Ver comentarios">
+          <i className="bi bi-chat"></i>
+        </span>
+        <span role="button" className="text-secondary me-2" title="Editar">
+          <i className="bi bi-pencil"></i>
+        </span>
+        <span role="button" className="text-danger" title="Borrar">
+          <i className="bi bi-trash"></i>
+        </span>
+      </div>
+    </div>
   </div>
-</div>
+    ))
+      )}
+      </div>
+      </div>
       </div>
     </div>
   );
