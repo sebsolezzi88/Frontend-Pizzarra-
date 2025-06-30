@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import { AddPost, getPostByUsername } from "../api/post";
 import Alert from "../components/Alert";
+import { formatDate } from "../utils/utils";
 
 const Profile = () => {
   const [posts, setPosts] = useState([]);
@@ -99,13 +100,7 @@ const Profile = () => {
         <div key={post.id} className="mb-3 p-3 border rounded bg-white shadow-sm">
           <p className="mb-1">{post.content}</p>
           <small className="text-muted">
-            Publicado el {new Date(post.createdAt).toLocaleDateString('es-ES', {
-              day: '2-digit',
-              month: 'long',
-              year: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit'
-            })}
+            Publicado el {formatDate(post.createdAt) }
           </small>
         </div>
       ))
