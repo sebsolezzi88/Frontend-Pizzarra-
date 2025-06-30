@@ -38,7 +38,7 @@ const Login = () => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-12 col-md-6 mx-auto mt-5">
+          <div className="col-12 col-md-4 mx-auto mt-5">
                 <form onSubmit={handleSubmit} className="bg-light border border-3 border-light  p-3 rounded shadow">
                   {error && <p className='text-center text-uppercase bg-danger text-light p1'>{error}</p>}
                 {success && <p className='text-center text-uppercase bg-success text-light p1'>{success}</p>}
