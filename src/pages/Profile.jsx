@@ -57,6 +57,11 @@ const Profile = () => {
   }
   };
 
+  //Funcion para eliminar post
+  const handletClickDelete = async  (postId) =>{
+    console.log(postId);
+  }
+
   if (loading) return <p>Cargando publicaciones...</p>;
 
   return (
@@ -111,7 +116,7 @@ const Profile = () => {
           <i className="bi bi-pencil"></i>
         </span>
         <span role="button" className="text-danger" title="Borrar">
-          <i className="bi bi-trash"></i>
+          <i onClick={()=>handletClickDelete(post.id)} className="bi bi-trash"></i>
         </span>
       </div>
     </div>
