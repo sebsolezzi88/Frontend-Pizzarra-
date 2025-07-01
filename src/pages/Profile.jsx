@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 
-import { AddPost, deletePost, getPostByUsername } from "../api/post";
+import { AddPost, deletePost, getPostByUsername,updatePost } from "../api/post";
 import Alert from "../components/Alert";
 import { formatDate } from "../utils/utils";
 
 const Profile = () => {
   const [posts, setPosts] = useState([]);
+  const [editando, setEditando] = useState(null); // null o el id del post a editar
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState("");
   const [mensaje,setMensaje] = useState({
@@ -48,10 +49,21 @@ const Profile = () => {
     }
     setMensaje({type:null,message: null});
     try {
-      const response = await AddPost(content);
-      setMensaje({ type: 'success', message: 'Publicación creada con éxito' });
-      setPosts([response.post, ...posts]);
+      if(editando){
+        //modo editar
+        const response = await updatePost(editando, content); // función que debes crear
+        setPosts(posts.map(post => post.id === editando ? response.post : post));
+        setMensaje({ type: 'success', message: 'Publicación actualizada con éxito' });
+      }
+      else{
+        //modo crear
+        const response = await AddPost(content);
+        setMensaje({ type: 'success', message: 'Publicación creada con éxito' });
+        setPosts([response.post, ...posts]);
+      }
       setContent(""); 
+      setEditando(null); // volver a modo crear
+      
   } catch (error) {
     setMensaje({ type: 'danger', message: 'Hubo un error al crear la publicación' });
   } finally{
@@ -80,6 +92,12 @@ const Profile = () => {
   }
   }
 
+  //Funcionalidad para editar
+  const handleClickEditar = (post) => {
+  setContent(post.content); // llena el textarea
+  setEditando(post.id);     // cambia a modo editar
+  }
+
   if (loading) return <p>Cargando publicaciones...</p>;
 
   return (
@@ -104,7 +122,7 @@ const Profile = () => {
               />
               
               <button type="submit" className="btn btn-primary d-bloc mt-2">
-                Guardar
+                {editando ? "Editar publicación" : "Crear publicación"}
               </button>
             </form>
           </div>
@@ -131,7 +149,7 @@ const Profile = () => {
           <i className="bi bi-chat"></i>
         </span>
         <span role="button" className="text-secondary me-2" title="Editar">
-          <i className="bi bi-pencil"></i>
+          <i onClick={() => handleClickEditar(post)} className="bi bi-pencil"></i>
         </span>
         <span role="button" className="text-danger" title="Borrar">
           <i onClick={()=>handletClickDelete(post.id)} className="bi bi-trash"></i>
