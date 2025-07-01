@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { AddPost, getPostByUsername } from "../api/post";
+import { AddPost, deletePost, getPostByUsername } from "../api/post";
 import Alert from "../components/Alert";
 import { formatDate } from "../utils/utils";
 
@@ -46,7 +46,7 @@ const Profile = () => {
       setMensaje({type:'danger',message: "El post no puede ir vacio"});
         return
     }
-    setMensaje({typ:null,message: null});
+    setMensaje({type:null,message: null});
     try {
       const response = await AddPost(content);
       setMensaje({ type: 'success', message: 'Publicación creada con éxito' });
@@ -54,12 +54,30 @@ const Profile = () => {
       setContent(""); 
   } catch (error) {
     setMensaje({ type: 'danger', message: 'Hubo un error al crear la publicación' });
+  } finally{
+    setTimeout(() => {
+      setMensaje({type:null,message:null})
+    }, 2000);
   }
   };
 
   //Funcion para eliminar post
   const handletClickDelete = async  (postId) =>{
-    console.log(postId);
+   
+    try {
+      const response = await deletePost(postId)
+      setMensaje({ type: 'success', message: 'Publicación borrada' });
+      console.log(response)
+      //usar filter para borrar el post del estado
+      setPosts(posts.filter(post=> post.id !== postId));
+  } catch (error) {
+      setMensaje({ type: 'danger', message: 'Hubo un error la publicación' });
+    }
+    finally{
+    setTimeout(() => {
+      setMensaje({type:null,message:null})
+    }, 2000);
+  }
   }
 
   if (loading) return <p>Cargando publicaciones...</p>;

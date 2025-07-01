@@ -15,9 +15,24 @@ export const AddPost = async (content) => {
         Authorization: `Bearer ${token}`,
       }
     });
-    return res.data; // o lo que tu backend devuelva
+    return res.data; 
+  } catch (error) {
+    console.error("Error al crear el post:", error);
+    throw error; 
+  }
+};
+
+export const deletePost = async (postId) =>{
+  try {
+    const token = localStorage.getItem("token");
+    const res = await axios.delete(API_URL+`/${postId}`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    return res.data; 
   } catch (error) {
     console.error("Error al crear el post:", error);
     throw error; // para manejar el error en el componente
   }
-};
+}
