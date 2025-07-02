@@ -27,7 +27,7 @@ const Navbar = () => {
              {user ? (
               <>
                 <li className="nav-item">
-                  <span className="nav-link">Hola, {user.name}</span>
+                  <span className="nav-link">Hola, {user.username}</span>
                 </li>
                 <li className="nav-item">
                   <button className="nav-link btn btn-link" onClick={logout}>Cerrar sesión</button>
