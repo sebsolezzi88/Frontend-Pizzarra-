@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
 import { getAllPost } from "../api/post";
+import CardPost from "../components/CardPost";
 
 const Home = () => {
-  const [post, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
+  
 
   useEffect(() => {
     const getPost = async () =>{
       const response = await getAllPost();
-      console.log(response.posts);
+      setPosts(response.posts);
     }
     getPost();
 
@@ -15,7 +17,16 @@ const Home = () => {
 
   return (
     <>
-        <h1>hoLA AL SISTIO</h1>
+        <div className="container mt-4">
+          <h1 className="text-light">Ultimos comentariaos</h1>
+
+          <div className="row">
+            
+           {posts.map(post => <CardPost post={post}/>)}
+                
+            
+          </div>
+        </div>
     </>
   )
 }
