@@ -25,8 +25,9 @@ const Login = () => {
     try {
       setError('');
       const response = await login(formData);
-      localStorage.setItem('token',response.token);
-      localStorage.setItem('username',response.username);
+      
+      //Almacenar en el estado global
+      login({ username: response.username, token: response.token });
       navigate('/profile');
     } catch (err) {
       setError(err.response?.data?.message || 'Error desconocido');
