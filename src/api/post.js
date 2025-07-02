@@ -1,6 +1,17 @@
 import axios from 'axios';
 const API_URL = 'http://localhost:3000/api/post';
 
+
+export const getAllPost = async () =>{
+  try {
+    const res = await axios.get(API_URL);
+    return res.data;
+  } catch (error) {
+    console.error("Error al crear el post:", error);
+    throw error; 
+  }
+}
+
 export const getPostByUsername = async (username) => {
   const res = await axios.get(`${API_URL}/user/username/${username}`);
   return res.data;
