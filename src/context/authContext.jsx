@@ -3,15 +3,29 @@ import { createContext, useContext, useState } from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); 
+  
+   const [user, setUser] = useState(null);
+  
+  // Leer usuario desde localStorage al iniciar
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    if (username) {
+      setUser({ username }); // Puedes agregar más datos si los guardas también
+    }
+  }, []);
 
   const login = (userData) => {
     setUser(userData);
+    localStorage.setItem('username', userData.username);
+    localStorage.setItem('token', userData.token);
   };
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('username');
+    localStorage.removeItem('token');
   };
+
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
