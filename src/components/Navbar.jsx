@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/authContext';
+
 
 const Navbar = () => {
+
+  const {user, logout} = useAuth();
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -19,12 +24,25 @@ const Navbar = () => {
         
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Ingresar</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/register">Registrarse</Link>
-            </li>
+             {user ? (
+              <>
+                <li className="nav-item">
+                  <span className="nav-link">Hola, {user.name}</span>
+                </li>
+                <li className="nav-item">
+                  <button className="nav-link btn btn-link" onClick={logout}>Cerrar sesión</button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">Ingresar</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/register">Registrarse</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
