@@ -1,9 +1,11 @@
 import  { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { login } from '../api/auth';
+import {  loginAPi } from '../api/auth';
+import { useAuth } from '../context/authContext';
 
 const Login = () => {
 
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   //Estado para llenar el formulario
@@ -24,7 +26,7 @@ const Login = () => {
     e.preventDefault()
     try {
       setError('');
-      const response = await login(formData);
+      const response = await loginAPi(formData);
       
       //Almacenar en el estado global
       login({ username: response.username, token: response.token });
