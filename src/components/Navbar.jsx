@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
-
+import FormNavbar from './FormNavbar';
 
 const Navbar = () => {
 
@@ -21,7 +21,7 @@ const Navbar = () => {
         >
           <span className="navbar-toggler-icon" />
         </button>
-        
+    
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
              {user ? (
@@ -46,6 +46,7 @@ const Navbar = () => {
               </>
             )}
           </ul>
+         <FormNavbar/>
         </div>
       </div>
     </nav>
