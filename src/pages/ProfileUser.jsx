@@ -49,6 +49,7 @@ const ProfileUser = () => {
                                 <span className='bi bi-people-fill'><strong> Seguidores:</strong> 15</span>
                                 <span><i className="bi bi-person-check-fill"></i> Siguiendo: 6</span>
                             </div>
+                                <button className='btn btn-success d-flex mx-auto mt-4'>Seguir</button>
                         </div>
                     </div>
                 <div className="col-11 col-md-6 mx-auto bg-light mt-3 p-4 rounded">
