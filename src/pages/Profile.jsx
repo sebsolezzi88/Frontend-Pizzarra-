@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { AddPost, deletePost, getPostByUsername,updatePost } from "../api/post";
 import Alert from "../components/Alert";
 import { formatDate } from "../utils/utils";
+import { useAuth } from "../context/authContext";
 
 const Profile = () => {
   const [posts, setPosts] = useState([]);
@@ -13,6 +14,10 @@ const Profile = () => {
     type:null,
     message:null
   });
+
+  const navigate = useNavigate();
+  const {logout} = useAuth();
+
   const username = localStorage.getItem("username");
 
   useEffect(() => {
@@ -65,7 +70,14 @@ const Profile = () => {
       setEditando(null); // volver a modo crear
       
   } catch (error) {
+    const msg = error.response?.data?.message;
+    if (msg === 'token expired') {
+      logout();
+      navigate('/login');
+  } else {
     setMensaje({ type: 'danger', message: 'Hubo un error al crear la publicación' });
+    console.log(msg);
+  }
   } finally{
     setTimeout(() => {
       setMensaje({type:null,message:null})
