@@ -95,9 +95,12 @@ const Profile = () => {
       //usar filter para borrar el post del estado
       setPosts(posts.filter(post=> post.id !== postId));
   } catch (error) {
-      setMensaje({ type: 'danger', message: 'Hubo un error la publicación' });
-    }
-    finally{
+       const msg = error.response?.data?.message;
+      if (msg === 'token expired') {
+        logout();
+        navigate('/login');
+      }
+    }finally{
     setTimeout(() => {
       setMensaje({type:null,message:null})
     }, 2000);
