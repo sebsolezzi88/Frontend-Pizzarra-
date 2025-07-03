@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { searchUser } from '../api/follower';
 
 const FormNavbar = () => {
 
@@ -9,9 +10,22 @@ const FormNavbar = () => {
     setImputSearch(e.target.value);
   }
 
-  const handletSubmit = (e) =>{
+  const handletSubmit = async (e) =>{
     e.preventDefault();
-    console.log(inputSearch);
+    if(inputSearch.trim() === ''){
+      alert("Debe completar el campo");
+      return;
+    }
+    
+    //Verificar si existe el usuario
+    try {
+      const res = await searchUser(inputSearch);
+      if (res.status === 'success'){
+        //Si el usuario existe lo redireccionamos a profile
+      }
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+    }
   }
   return (
     <form onSubmit={handletSubmit} class="d-flex">
