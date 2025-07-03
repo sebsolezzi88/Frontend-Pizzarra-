@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getPostByUsername } from '../api/post';
-import { getFollowers, getFollowings, searchUser } from '../api/follower';
+import { followUser, getFollowers, getFollowings, searchUser } from '../api/follower';
 import { formatDate } from '../utils/utils';
 
 
@@ -45,6 +45,17 @@ const ProfileUser = () => {
       handletEffect();
       
     }, [])
+
+    //boton de Seguir
+    const handletClick = async () =>{
+        try {
+            const res =  await followUser(username);
+            console.log(res.status)
+        } catch (error) {
+            console.log(error)
+        }
+       
+    }
     
 
     return (
@@ -59,7 +70,7 @@ const ProfileUser = () => {
                                 <span className='bi bi-people-fill'><strong> Seguidores:</strong> {followers.length}</span>
                                 <span><i className="bi bi-person-check-fill"></i> Siguiendo: {followings.length}</span>
                             </div>
-                                <button className='btn btn-success d-flex mx-auto mt-4'>Seguir</button>
+                                <button onClick={handletClick} className='btn btn-success d-flex mx-auto mt-4'>Seguir</button>
                         </div>
                     </div>
                 <div className="col-11 col-md-6 mx-auto bg-light mt-3 p-4 rounded">

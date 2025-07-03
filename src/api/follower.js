@@ -19,16 +19,19 @@ export const getFollowings = async (username) => {
 
 export const followUser = async (username) => {
   const token = localStorage.getItem("token");
-
+  
   try {
-    const res = await axios.post(`${API_URL}/username/${username}/follow`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const res = await axios.post(`${API_URL}/username/${username}/follow`,
+      {}, // cuerpo vacío
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       }
-    });
-    return res.data; 
+    );
+    return res.data;
   } catch (error) {
-    console.error("Error al crear el post:", error);
-    throw error; 
+    console.error("Error al seguir al usuario:", error);
+    throw error;
   }
 };
