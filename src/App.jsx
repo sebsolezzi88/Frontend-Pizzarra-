@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Navbar from './components/Navbar';
 import PrivateRoute from './pages/PrivateRoute';
+import ProfileUser from './pages/ProfileUser';
 
 function App() {
   
@@ -16,6 +17,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
+        <Route path='/userprofile' element={<ProfileUser/>}/>
 
         {/* Ruta protegida */}
         <Route path="/profile" 

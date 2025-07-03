@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import { searchUser } from '../api/follower';
+import { useNavigate } from 'react-router-dom';
+
 
 const FormNavbar = () => {
 
-    //estadoInput 
-  const [inputSearch, setImputSearch] = useState('');
+  
+  const [inputSearch, setImputSearch] = useState('');//estadoInput 
+  const navigate = useNavigate(); //Para redireccionar
+
 
   const handleChange = (e) =>{
     setImputSearch(e.target.value);
@@ -21,9 +25,14 @@ const FormNavbar = () => {
     try {
       const res = await searchUser(inputSearch);
       if (res.status === 'success'){
-        //Si el usuario existe lo redireccionamos a profile
+        //Si el usuario existe lo redireccionamos a userprofile
+        navigate(`/userprofile/${res.user}`);
+        setImputSearch('');
+
       }
     } catch (error) {
+      //TODO: Usar aleras más vistodas
+      alert('Usuario no encontrado');
       console.log(error.response?.data || error.message);
     }
   }
