@@ -2,7 +2,7 @@ import { formatDate } from "../utils/utils"
 
 
 const CardPost = ({post}) => {
-    console.log(post)
+    
   return (
     <div key={post.id}  className="col-md-4 m-3 p-3 border rounded bg-white shadow-sm">
         <h5 className="text-secondary">{post.User.username}</h5>
