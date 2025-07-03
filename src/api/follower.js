@@ -7,4 +7,12 @@ export const searchUser = async (username) => {
   return res.data;
 };
 
+export const getFollowers = async (username) => {
+  const res = await axios.get(`${API_URL}/username/${username}/followers`);
+  return res.data;
+};
 
+export const getFollowings = async (username) => {
+  const res = await axios.get(`${API_URL}/username/${username}/followings`);
+  return res.data;
+};
