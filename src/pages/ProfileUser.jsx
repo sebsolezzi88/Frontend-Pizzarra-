@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getPostByUsername } from '../api/post';
-import { searchUser } from '../api/follower';
+import { getFollowers, getFollowings, searchUser } from '../api/follower';
 import { formatDate } from '../utils/utils';
 
 
@@ -9,6 +9,8 @@ const ProfileUser = () => {
 
     const {username} = useParams();
     const [userPost, setUserPost] = useState([]);
+    const [followers,setFollowers] = useState([]);
+    const [followings,setFollowings] = useState([]);
     const navigate = useNavigate();
 
     if(!username){
@@ -24,8 +26,16 @@ const ProfileUser = () => {
               if (res.status === 'success'){
                 //Si el usuario existe obtenemos sus post
                 const res = await getPostByUsername(username);
-                console.log(res.posts)
                 setUserPost(res.posts);
+                
+                //Obtener seguidores
+                const res2 = await getFollowers(username);
+                setFollowers(res2.followers);
+
+                //Obtener seguidores
+                const res3 = await getFollowings(username);
+                setFollowings(res3.followings);
+
               }
             } catch (error) {
               navigate("/");
@@ -46,8 +56,8 @@ const ProfileUser = () => {
                         <div className="bg-light rounded p-4 shadow-sm">
                             <h2 className="text-center mb-3">{username}</h2>
                             <div className="d-flex justify-content-around">
-                                <span className='bi bi-people-fill'><strong> Seguidores:</strong> 15</span>
-                                <span><i className="bi bi-person-check-fill"></i> Siguiendo: 6</span>
+                                <span className='bi bi-people-fill'><strong> Seguidores:</strong> {followers.length}</span>
+                                <span><i className="bi bi-person-check-fill"></i> Siguiendo: {followings.length}</span>
                             </div>
                                 <button className='btn btn-success d-flex mx-auto mt-4'>Seguir</button>
                         </div>
