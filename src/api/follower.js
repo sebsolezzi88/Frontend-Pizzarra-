@@ -35,3 +35,15 @@ export const followUser = async (username) => {
     throw error;
   }
 };
+
+export const unfollowUser = async (username) => {
+  const token = localStorage.getItem("token");
+
+  const res = await axios.delete(`${API_URL}/username/${username}/unfollow`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+};

@@ -1,16 +1,18 @@
 import {useEffect, useState} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getPostByUsername } from '../api/post';
-import { followUser, getFollowers, getFollowings, searchUser } from '../api/follower';
+import { followUser, getFollowers, getFollowings, searchUser, unfollowUser } from '../api/follower';
 import { formatDate } from '../utils/utils';
 
 
 const ProfileUser = () => {
 
+    const currentUser = localStorage.getItem('username');
     const {username} = useParams();
     const [userPost, setUserPost] = useState([]);
-    const [followers,setFollowers] = useState([]);
-    const [followings,setFollowings] = useState([]);
+    const [followers,setFollowers] = useState([]); //estado de seguidos
+    const [followings,setFollowings] = useState([]); //estado de seguires
+    const [isFollow, setIsFollow] = useState(false);
     const navigate = useNavigate();
 
     if(!username){
@@ -30,6 +32,11 @@ const ProfileUser = () => {
                 
                 //Obtener seguidores
                 const res2 = await getFollowers(username);
+                if(res2.followers.some(f=> f.username=== currentUser)){
+                    setIsFollow(true)
+                }else{
+                    setIsFollow(false)
+                }
                 setFollowers(res2.followers);
 
                 //Obtener seguidores
@@ -46,16 +53,22 @@ const ProfileUser = () => {
       
     }, [])
 
-    //boton de Seguir
-    const handletClick = async () =>{
+    //boton de Seguir/dejar de seguir
+    const handletClick = async () => {
         try {
-            const res =  await followUser(username);
-            console.log(res.status)
+            if (isFollow) {
+            const res = await unfollowUser(username);
+                setIsFollow(false);
+                setFollowers(prev => prev.filter(f => f.username !== currentUser));
+            } else {
+                const res = await followUser(username);
+                setIsFollow(true);
+                setFollowers(prev => [...prev, { username: currentUser }]);
+            }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-       
-    }
+    };
     
 
     return (
@@ -70,7 +83,12 @@ const ProfileUser = () => {
                                 <span className='bi bi-people-fill'><strong> Seguidores:</strong> {followers.length}</span>
                                 <span><i className="bi bi-person-check-fill"></i> Siguiendo: {followings.length}</span>
                             </div>
-                                <button onClick={handletClick} className='btn btn-success d-flex mx-auto mt-4'>Seguir</button>
+                               <button
+                                onClick={handletClick}
+                                className={`btn d-flex mx-auto mt-4 ${isFollow ? 'btn-danger' : 'btn-success'}`}
+                                >
+                                {isFollow ? 'Dejar de seguir' : 'Seguir'}
+                                </button>
                         </div>
                     </div>
                 <div className="col-11 col-md-6 mx-auto bg-light mt-3 p-4 rounded">
