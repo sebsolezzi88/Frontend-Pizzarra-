@@ -1,10 +1,12 @@
 import { createContext, useContext, useState,useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   
    const [user, setUser] = useState(null);
+   const navigate = useNavigate();
   
   // Leer usuario desde localStorage al iniciar
   useEffect(() => {
@@ -24,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem('username');
     localStorage.removeItem('token');
+    navigate('/login');
   };
 
 
