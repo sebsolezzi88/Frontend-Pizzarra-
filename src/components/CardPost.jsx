@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { formatDate } from "../utils/utils"
 
 
@@ -12,9 +13,9 @@ const CardPost = ({post}) => {
             Publicado el {formatDate(post.createdAt)}
           </small>
           <div>
-            <span role="button" className="text-primary me-2" title="Ver comentarios o comentar">
-              <i className="bi bi-chat"></i>
-            </span>
+            <Link to={`/post/${post.id}`} className="text-primary me-2" title="Ver comentarios o comentar">
+              <i className="bi bi-chat" role="button"></i>
+            </Link>
           </div>
         </div>
       </div>
