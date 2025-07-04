@@ -6,6 +6,7 @@ import Profile from './pages/Profile';
 import Navbar from './components/Navbar';
 import PrivateRoute from './pages/PrivateRoute';
 import ProfileUser from './pages/ProfileUser';
+import Post from './pages/Post';
 
 function App() {
   
@@ -25,8 +26,13 @@ function App() {
           <PrivateRoute>
             <Profile />
           </PrivateRoute>
-        } 
-        />
+        }/>
+         <Route path="/post/:idpost" 
+          element={
+          <PrivateRoute>
+            <Post />
+          </PrivateRoute>
+        }/>
 
       <Route path="*" element={<Navigate to="/" replace />} />    
       </Routes>

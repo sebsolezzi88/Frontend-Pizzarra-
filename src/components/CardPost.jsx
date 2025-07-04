@@ -12,7 +12,7 @@ const CardPost = ({post}) => {
             Publicado el {formatDate(post.createdAt)}
           </small>
           <div>
-            <span role="button" className="text-primary me-2" title="Ver comentarios">
+            <span role="button" className="text-primary me-2" title="Ver comentarios o comentar">
               <i className="bi bi-chat"></i>
             </span>
           </div>
