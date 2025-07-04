@@ -46,6 +46,8 @@ const Post = () => {
             }
             //Guarda el comentario
             const response = await postComment(idPost,inputComment.trim());
+            console.log(response);
+            setComments([...comments,response.comment])
             
         } catch (error) {
             const msg = error.response?.data?.message;
