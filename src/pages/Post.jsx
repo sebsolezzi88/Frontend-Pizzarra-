@@ -31,12 +31,16 @@ const Post = () => {
   return (
    <div className="container">
     <div className="row mt-5">
-        <div className="col-12 col-md-6 bg-light rounded p-2">
-            <h4 className='text-center'>{userPost.content}</h4>
-            <p>Por: <span>{userPost.User?.username}</span> </p>
-            <p>Creado el :  {formatDate(userPost.createdAt)} </p>
+        <div className="col-12 col-md-6 bg-light rounded shadow-sm p-4 mx-auto mt-4">
+            <h5 className="fw-bold mb-3">{userPost.User?.username}</h5>
+
+            <p className="text-center fs-5 mb-4">{userPost.content}</p>
+
+            <p className="text-end text-secondary small mb-0">
+                Creado el: {formatDate(userPost.createdAt)}
+            </p>
         </div>
-        
+
     </div>
    </div>
   )
