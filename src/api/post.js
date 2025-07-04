@@ -70,7 +70,7 @@ export const getPostAndComments = async(postId) =>{
   return res.data;
 }
 
-export const postComment = async(postId)=>{
+export const postComment = async(postId,content)=>{
   const token = localStorage.getItem("token");
 
   try {
