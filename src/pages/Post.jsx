@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { getPostAndComments } from '../api/post';
+import { useNavigate, useParams } from 'react-router-dom'
+import { getPostAndComments, postComment } from '../api/post';
 import { formatDate } from '../utils/utils';
 import Alert from '../components/Alert';
+import { useAuth } from '../context/authContext';
+
 
 
 const Post = () => {
@@ -12,6 +14,8 @@ const Post = () => {
     const [userPost, setUserPost] = useState({}); //Estado del Usuario creador del post
     const [inputComment, setInputCommnet] = useState(''); //Estado del imput del form
     const [alert, setAlert] = useState({});
+    const {logout} =useAuth();
+    const navigate = useNavigate();
     
     useEffect(() => {
       const handletGet = async () =>{
@@ -33,15 +37,28 @@ const Post = () => {
     }
     
     const handletSubmit = async (e) =>{
-        e.preventDefault();
-        if(inputComment.trim() === ''){
-            setAlert({type:'danger',message:'Debe completa el campo'});
+        
+        try {
+            e.preventDefault();
+            if(inputComment.trim() === ''){
+                setAlert({type:'danger',message:'Debe completa el campo'});
+                return
+            }
+            //Guarda el comentario
+            const response = await postComment(idPost,inputComment.trim());
+            
+        } catch (error) {
+            const msg = error.response?.data?.message;
+            if (msg === 'token expired') {
+                logout();
+                navigate('/login');
+            }
+        }
+        finally{
             setTimeout(() => {
             setAlert({})
             }, 2000);
-            return
         }
-        
     }
 
     /* if (!userPost || !userPost.User) {
