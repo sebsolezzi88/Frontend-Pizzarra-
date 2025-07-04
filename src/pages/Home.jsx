@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <>
         <div className="container mt-4">
-          <h1 className="text-light">Ultimos comentariaos</h1>
+          <h1 className="text-light">Ultimos Post</h1>
 
           <div className="row">
             
