@@ -1,5 +1,6 @@
 import axios from 'axios';
 const API_URL = 'http://localhost:3000/api/post';
+const API_URL_COMMENTS = 'http://localhost:3000/api/comment';
 
 
 export const getAllPost = async () =>{
@@ -62,4 +63,9 @@ export const deletePost = async (postId) =>{
     console.error("Error al crear el post:", error);
     throw error; // para manejar el error en el componente
   }
+}
+
+export const getPostAndComments = async(postId) =>{
+  const res = await axios.get(`${API_URL_COMMENTS}/post/${postId}`);
+  return res.data;
 }
