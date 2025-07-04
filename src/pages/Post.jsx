@@ -14,8 +14,9 @@ const Post = () => {
       const handletGet = async () =>{
         try {
             const res = await getPostAndComments(idPost);
-            console.log(res.post);
+            console.log(res.comments);
             setUserPost(res.post)
+            setComments(res.comments);
             
         } catch (error) {
             console.log(error);
@@ -39,6 +40,11 @@ const Post = () => {
             <p className="text-end text-secondary small mb-0">
                 Creado el: {formatDate(userPost.createdAt)}
             </p>
+            <div className="bg-secondary p-4 rounded mt-2">
+                {comments.length === 0 ? <p className='text-center text-light fs-5'>No hay comentarios. Se el primero en comentar</p> : 
+                    <p>Hay comentarios</p>
+                }
+            </div>
         </div>
 
     </div>
