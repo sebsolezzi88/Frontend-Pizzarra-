@@ -27,7 +27,7 @@ function App() {
             <Profile />
           </PrivateRoute>
         }/>
-         <Route path="/post/:idpost" 
+         <Route path="/post/:idPost" 
           element={
           <PrivateRoute>
             <Post />
