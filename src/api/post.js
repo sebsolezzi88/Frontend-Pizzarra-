@@ -69,3 +69,19 @@ export const getPostAndComments = async(postId) =>{
   const res = await axios.get(`${API_URL_COMMENTS}/post/${postId}`);
   return res.data;
 }
+
+export const postComment = async(postId)=>{
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await axios.post(`${API_URL_COMMENTS}/${postId}`, {content}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    return res.data; 
+  } catch (error) {
+    console.error("Error al crear el post:", error);
+    throw error; 
+  }
+}
