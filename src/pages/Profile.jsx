@@ -95,7 +95,7 @@ const Profile = () => {
       //usar filter para borrar el post del estado
       setPosts(posts.filter(post=> post.id !== postId));
   } catch (error) {
-       const msg = error.response?.data?.message;
+      const msg = error.response?.data?.message;
       if (msg === 'token expired') {
         logout();
         navigate('/login');

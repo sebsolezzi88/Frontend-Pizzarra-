@@ -3,10 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { getPostByUsername } from '../api/post';
 import { followUser, getFollowers, getFollowings, searchUser, unfollowUser } from '../api/follower';
 import { formatDate } from '../utils/utils';
+import { useAuth } from '../context/authContext';
 
 
 const ProfileUser = () => {
-
+    const {logout} = useAuth();
     const currentUser = localStorage.getItem('username');
     const {username} = useParams();
     const [userPost, setUserPost] = useState([]);
@@ -66,7 +67,11 @@ const ProfileUser = () => {
                 setFollowers(prev => [...prev, { username: currentUser }]);
             }
         } catch (error) {
-            console.log(error);
+          const msg = error.response?.data?.message;
+          if (msg === 'token expired') {
+            logout();
+            navigate('/login');
+          }
         }
     };
     
