@@ -6,7 +6,11 @@ const CardPost = ({post}) => {
     
   return (
     <div key={post.id}  className="col-md-4 m-3 p-3 border rounded bg-white shadow-sm">
-        <h5 className="text-secondary">{post.User.username}</h5>
+        <h5 className="text-secondary">
+          <Link className="nav-link" to={`/userprofile/${post.User.username}`}>
+          {post.User.username}
+          </Link>
+          </h5>
         <p className="mb-1">{post.content}</p>
         <div className="d-flex justify-content-between align-items-center">
           <small className="text-muted">
