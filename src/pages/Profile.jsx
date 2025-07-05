@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AddPost, deletePost, getPostByUsername,updatePost } from "../api/post";
 import Alert from "../components/Alert";
 import { formatDate } from "../utils/utils";
@@ -175,7 +175,9 @@ const Profile = () => {
       </small>
       <div>
         <span role="button" className="text-primary me-2" title="Ver comentarios">
-          <i className="bi bi-chat"></i>
+          <Link to={`/post/${post.id}`} className="text-primary me-2" title="Ver comentarios o comentar">
+              <i className="bi bi-chat" role="button"></i>
+          </Link>
         </span>
         <span role="button" className="text-secondary me-2" title="Editar">
           <i onClick={() => handleClickEditar(post)} className="bi bi-pencil"></i>
