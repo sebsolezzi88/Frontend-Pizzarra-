@@ -4,11 +4,14 @@ import { AddPost, deletePost, getPostByUsername,updatePost } from "../api/post";
 import Alert from "../components/Alert";
 import { formatDate } from "../utils/utils";
 import { useAuth } from "../context/authContext";
+import { getFollowers, getFollowings } from "../api/follower";
 
 const Profile = () => {
   const [posts, setPosts] = useState([]);
   const [editando, setEditando] = useState(null); // null o el id del post a editar
   const [loading, setLoading] = useState(true);
+  const [followers, setFollowers] = useState([]);
+  const [followings, setFollowings] = useState([]);
   const [content, setContent] = useState("");
   const [mensaje,setMensaje] = useState({
     type:null,
@@ -25,6 +28,10 @@ const Profile = () => {
       try {
         const data = await getPostByUsername(username);
         setPosts(data.posts);
+        const data2 = await getFollowers(username);
+        setFollowers(data2.followers);
+        const data3 = await getFollowings(username);
+        setFollowings(data3.followings);
       } catch (error) {
         console.error("Error al obtener los posts:", error);
       } finally {
@@ -119,7 +126,14 @@ const Profile = () => {
     <div className="container mt-5">
       <div className="row">
         <div className="col-12 col-md-6 mt-2">
-          <div className="bg-light rounded p-4">
+          <div className="bg-light  p-4 shadow-sm">
+              <h2 className="text-center mb-3">{username}</h2>
+                <div className="d-flex justify-content-around">
+                  <span className='bi bi-people-fill'><strong> Seguidores:</strong> {followers.length}</span>
+                  <span><i className="bi bi-person-check-fill"></i> Siguiendo: {followings.length}</span>
+          </div>
+            </div>
+          <div className="bg-light  p-4">
             {mensaje.message && <Alert type={mensaje.type} message={mensaje.message}/>}
             <form onSubmit={handletSubmit}>
               <label
