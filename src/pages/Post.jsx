@@ -4,6 +4,8 @@ import { getPostAndComments, postComment } from '../api/post';
 import { formatDate } from '../utils/utils';
 import Alert from '../components/Alert';
 import { useAuth } from '../context/authContext';
+import CardComment from '../components/CardComment';
+
 
 
 
@@ -24,6 +26,7 @@ const Post = () => {
             console.log(res.comments);
             setUserPost(res.post)
             setComments(res.comments);
+            console.log(res.comments);
             
         } catch (error) {
             console.log(error);
@@ -46,8 +49,10 @@ const Post = () => {
             }
             //Guarda el comentario
             const response = await postComment(idPost,inputComment.trim());
-            console.log(response);
-            setComments([...comments,response.comment])
+            let comment = response.comment;
+            comment = {...comment, User:{username:localStorage.getItem('username')}}
+            setComments([comment,...comments])
+            setInputCommnet('');
             
         } catch (error) {
             const msg = error.response?.data?.message;
@@ -94,9 +99,9 @@ const Post = () => {
             
         </div>
         <div className='col-12 col-md-6 bg-light rounded shadow-sm p-4 mx-auto mt-4'>
-            <div className="bg-secondary p-4 rounded mt-2">
+            <div className="bg-dark p-4 rounded mt-2">
                 {comments.length === 0 ? <p className='text-center text-light fs-5'>No hay comentarios. Se el primero en comentar</p> : 
-                    <p>Hay comentarios</p>
+                    comments.map(comment => <CardComment comment={comment}/>)
                 }
             </div>
         </div>
